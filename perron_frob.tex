@@ -1,0 +1,171 @@
+\documentclass{article}
+
+\usepackage{Sweave}
+\begin{document}
+\input{perron_frob-concordance}
+
+To grasp the Perron-Frobenius theorem:
+
+\begin{Schunk}
+\begin{Sinput}
+> library(expm)
+> A <- matrix(c(1, -3, -6, 3, 7, 6, -3,-3,-2), nrow=3)
+> A
+\end{Sinput}
+\begin{Soutput}
+     [,1] [,2] [,3]
+[1,]    1    3   -3
+[2,]   -3    7   -3
+[3,]   -6    6   -2
+\end{Soutput}
+\begin{Sinput}
+> r <- eigen(A)
+> r$values
+\end{Sinput}
+\begin{Soutput}
+[1]  4  4 -2
+\end{Soutput}
+\begin{Sinput}
+> r$vectors
+\end{Sinput}
+\begin{Soutput}
+           [,1]      [,2]       [,3]
+[1,] -0.8164950 0.3487429 -0.4082483
+[2,] -0.4068588 0.8137335 -0.4082483
+[3,]  0.4096362 0.4649906 -0.8164966
+\end{Soutput}
+\begin{Sinput}
+> maxlambda <- max(r$values)
+> maxlambda
+\end{Sinput}
+\begin{Soutput}
+[1] 4
+\end{Soutput}
+\begin{Sinput}
+> spect <- max(abs(r$values))
+> spect
+\end{Sinput}
+\begin{Soutput}
+[1] 4
+\end{Soutput}
+\begin{Sinput}
+> A1 <- ((1/maxlambda) * A)%^%1
+> A2 <- ((1/maxlambda) * A)%^%2
+> A3 <- ((1/maxlambda) * A)%^%3
+> A4 <- ((1/maxlambda) * A)%^%4
+> A5 <- ((1/maxlambda) * A)%^%5
+> A6 <- ((1/maxlambda) * A)%^%6
+> A7 <- ((1/maxlambda) * A)%^%7
+> A8 <- ((1/maxlambda) * A)%^%8
+> A9 <- ((1/maxlambda) * A)%^%9
+> A10 <- ((1/maxlambda) * A)%^%10
+> A1
+\end{Sinput}
+\begin{Soutput}
+      [,1] [,2]  [,3]
+[1,]  0.25 0.75 -0.75
+[2,] -0.75 1.75 -0.75
+[3,] -1.50 1.50 -0.50
+\end{Soutput}
+\begin{Sinput}
+> A2
+\end{Sinput}
+\begin{Soutput}
+       [,1]  [,2]   [,3]
+[1,]  0.625 0.375 -0.375
+[2,] -0.375 1.375 -0.375
+[3,] -0.750 0.750  0.250
+\end{Soutput}
+\begin{Sinput}
+> A3
+\end{Sinput}
+\begin{Soutput}
+        [,1]   [,2]    [,3]
+[1,]  0.4375 0.5625 -0.5625
+[2,] -0.5625 1.5625 -0.5625
+[3,] -1.1250 1.1250 -0.1250
+\end{Soutput}
+\begin{Sinput}
+> A4
+\end{Sinput}
+\begin{Soutput}
+         [,1]    [,2]     [,3]
+[1,]  0.53125 0.46875 -0.46875
+[2,] -0.46875 1.46875 -0.46875
+[3,] -0.93750 0.93750  0.06250
+\end{Soutput}
+\begin{Sinput}
+> A5
+\end{Sinput}
+\begin{Soutput}
+          [,1]     [,2]      [,3]
+[1,]  0.484375 0.515625 -0.515625
+[2,] -0.515625 1.515625 -0.515625
+[3,] -1.031250 1.031250 -0.031250
+\end{Soutput}
+\begin{Sinput}
+> A6
+\end{Sinput}
+\begin{Soutput}
+           [,1]      [,2]       [,3]
+[1,]  0.5078125 0.4921875 -0.4921875
+[2,] -0.4921875 1.4921875 -0.4921875
+[3,] -0.9843750 0.9843750  0.0156250
+\end{Soutput}
+\begin{Sinput}
+> A7
+\end{Sinput}
+\begin{Soutput}
+           [,1]      [,2]       [,3]
+[1,]  0.4960938 0.5039063 -0.5039063
+[2,] -0.5039063 1.5039063 -0.5039063
+[3,] -1.0078125 1.0078125 -0.0078125
+\end{Soutput}
+\begin{Sinput}
+> A8
+\end{Sinput}
+\begin{Soutput}
+           [,1]      [,2]        [,3]
+[1,]  0.5019531 0.4980469 -0.49804688
+[2,] -0.4980469 1.4980469 -0.49804688
+[3,] -0.9960938 0.9960938  0.00390625
+\end{Soutput}
+\begin{Sinput}
+> A9
+\end{Sinput}
+\begin{Soutput}
+           [,1]      [,2]         [,3]
+[1,]  0.4990234 0.5009766 -0.500976563
+[2,] -0.5009766 1.5009766 -0.500976563
+[3,] -1.0019531 1.0019531 -0.001953125
+\end{Soutput}
+\begin{Sinput}
+> A10
+\end{Sinput}
+\begin{Soutput}
+           [,1]      [,2]          [,3]
+[1,]  0.5004883 0.4995117 -0.4995117188
+[2,] -0.4995117 1.4995117 -0.4995117188
+[3,] -0.9990234 0.9990234  0.0009765625
+\end{Soutput}
+\end{Schunk}
+
+Is $A$ a primitive matrix?  Take its fifth power to test it.
+
+\begin{Schunk}
+\begin{Sinput}
+> B <- A%^%5
+> B
+\end{Sinput}
+\begin{Soutput}
+      [,1] [,2] [,3]
+[1,]   496  528 -528
+[2,]  -528 1552 -528
+[3,] -1056 1056  -32
+\end{Soutput}
+\end{Schunk}
+
+
+
+
+\end{document}

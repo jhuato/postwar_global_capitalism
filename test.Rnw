@@ -1,0 +1,437 @@
+\documentclass[pt=12]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{hyperref}
+
+
+\title{The Deep History of Postwar Global Capitalism}
+\author{Julio Huato}
+\date{\today}
+
+\begin{document}
+\SweaveOpts{concordance=TRUE}
+
+\maketitle
+
+\section{Introduction}
+
+The purpose of this article is to grasp the evolving international structure of postwar global capitalism in its empirical complexity, i.e. regarded as a concrete historical totality.
+
+The theoretical framework is explicitly Marxian.  It takes seriously, without hedging, the chief tenets of historical materialism and of the radical critical of political economy from the standpoint of the direct producers of the world.  This radical critique is extended to modern economics.  The tools utilized to extract factual knowledge from the observations compiled in the data set are those of modern, advanced inferential statistics.
+
+The study proceeds in stages progressing from the most simple and general notions, i.e. those based on the most strict and highly abstract premises, to the more complex and specific categories, i.e. those highlighted under more relaxed and concrete hypotheses.  In the earlier stages, the statistical techniques used presuppose that the processes that characterize social life under global capitalism are straightforward.  In the latter stages, these techniques allow for processes that are more involved  However, the progression, as opposed to the mere results, is essential to apprehend the layered nature of the social formation of interest.
+
+This article was typeset with \LaTeX, the data sets were analyzed with $R$, and both data analysis and typesetting were integrated with \texttt{Sweave}.  The $R$ code is inserted in the relevants part of the text in listing form. All the project files are available for public inspection on \textbf{Share}\LaTeX:
+
+\href{https://www.sharelatex.com/project/5724dd4cc9e6d5e323d97763}{\texttt{The Deep History of Postwar Global Capitalism}}
+
+
+<<eval=TRUE>>=
+2+2
+@
+
+Here I go back to \LaTeX.  And then a curve:
+
+<<fig=TRUE>>=
+curve(1/x, -2,2, lwd=2, col="violet")
+@
+
+\section{Data}
+
+182 countries, 65 years (1950-2014).  The relevant variables are: $N, E, L, L_h, Y, Y^o, K, W, C$, from which the following variables were derived: 
+\[
+y_n, y_w, y_l, y_h, k_n, k_w, k_l, k_h, w, c, c^x, c^a, e, \epsilon, \epsilon^x, \epsilon^a, \rho, r, \kappa, \kappa^x, \kappa^a.
+\]
+
+\subsection{International unweighted}
+
+Population:
+<<cache=TRUE, echo=FALSE, fig=TRUE>>=
+library(fBasics)
+library(nlme)
+pwt9 <- read.csv("~/Downloads/pwt9.csv")
+# str(pwt9)
+# summary(pwt9)
+# PRIMARY VARIABLES: CALCULATION ------------------------------------------
+pwt9$N <- pwt9$pop 
+pwt9$E <- pwt9$emp
+pwt9$L <- pwt9$E*pwt9$avh
+pwt9$Lh <- pwt9$L*pwt9$hc
+pwt9$w <- pwt9$labsh
+pwt9$Yo <- pwt9$rgdpo
+pwt9$Y <- (pwt9$rgdpe + pwt9$Yo)/2 # average of expenditure and output side of RGDP
+pwt9$W <- (pwt9$w * pwt9$Y) # Wage
+pwt9$c <- pwt9$csh_c
+pwt9$C <- (pwt9$c * pwt9$Yo)
+pwt9$K <- pwt9$rkna
+pwt9no <- pwt9
+pwt9no$c[pwt9no$c<0] <- NA # Out of range c as NA
+pwt9no$c[pwt9no$c>1] <- NA # Out of range c as NA
+pwt9$cno <- pwt9no$c
+pwt9$Cno <- (pwt9$cno * pwt9$Yo) # Consumption with no outliers
+rm(pwt9no)
+pwt9a <- pwt9
+pwt9a$c[pwt9a$c<0] <- 0 # Adjusts c by forcing c<0 to 0
+pwt9a$c[pwt9a$c>1] <- 1 # Adjusts c by forcing c>1 to 1
+pwt9$ca <- pwt9a$c # Adjusted c
+pwt9$Ca <- (pwt9$ca * pwt9$Yo) # Consumption
+rm(pwt9a)
+
+# SECONDARY VARIABLE CALCULATION ------------------------------------------
+pwt9$yn <- pwt9$Y/pwt9$N # Per capita productivity
+pwt9$yw <- pwt9$Y/pwt9$E # Per worker productivity
+pwt9$yl <- pwt9$Y/pwt9$L # Per hour productivity
+pwt9$yh <- pwt9$Y/pwt9$Lh # Skilled-adjusted hourly productivity index
+pwt9$epr <- pwt9$E/pwt9$N # Employment-population ratio
+pwt9$kn <- pwt9$K/pwt9$N # Per capita capital
+pwt9$kw <- pwt9$K/pwt9$E # Per worker capital
+pwt9$kl <- pwt9$K/pwt9$L # Per hour capital
+pwt9$kh <- pwt9$K/pwt9$Lh # Capital per skilled-adjusted hour
+pwt9$e <- (pwt9$Y-pwt9$W)/pwt9$W # Rate of exploitation
+pwt9$eps <- (pwt9$Yo-pwt9$C)/pwt9$C # Nonconsumption-consumption ratio
+pwt9$epsno <- (pwt9$Yo-pwt9$Cno)/pwt9$Cno # Nonconsumption-consumption ratio (NAs)
+pwt9$epsa <- (pwt9$Yo-pwt9$Ca)/pwt9$Ca # Nonconsumption-consumption ratio (adj)
+pwt9$rho <- pwt9$Y/pwt9$K # Capital productivity
+pwt9$r <- (pwt9$Y-pwt9$W)/pwt9$K # Profit rate
+pwt9$kap <- (pwt9$Yo-pwt9$C)/pwt9$C # Nonconsumption-capital ratio
+pwt9$kapno <- (pwt9$Yo-pwt9$Cno)/pwt9$Cno # Nonconsumption-capital ratio
+pwt9$kapa <- (pwt9$Yo-pwt9$Ca)/pwt9$Ca # Nonconsumption-capital ratio
+
+pwt9 <- pwt9[c("year", "N", "E", "L", "Lh", "w", "Yo", "Y", "W", "c", "cno", "ca", "C", "Cno", "Ca", "K", "yn", "yw", "yl", "yh", "epr", "kn", "kw", "kl", "kh", "e", "eps", "epsno", "epsa", "rho", "r", "kap", "kapno", "kapa")]
+# summary(pwt9)
+# str(pwt9)
+# basicStats(pwt9[c("year", "N", "E", "L", "Lh", "w", "Yo", "Y", "W", "c", "cno", "ca", "C", "Cno", "Ca", "K", "yn", "yw", "yl", "yh", "epr", "kn", "kw", "kl", "kh", "e", "eps", "epsno", "epsa", "rho", "r", "kap", "kapno", "kapa")])[c("nobs", "NAs", "Sum", "Mean", "Median","Stdev", "Skewness", "Kurtosis"),]
+
+# DESCRIPTIVES TABLE
+des <- as.data.frame(matrix(c(1950:2014),nrow = 65, ncol=1))
+
+yrNstats <- tapply(pwt9$N, pwt9$year, basicStats)
+yrNstats <- as.data.frame(yrNstats)
+yrNstats <- t(yrNstats)
+Ncolnames <- c( "Nnobs", "NNAs", "NMinimum", "NMaximum", "N1. Quartile", "N3. Quartile", "NMean", "NMedian", "NSum", "NSE Mean", "NLCL Mean", "NUCL Mean", "NVariance", "NStdev", "NSkewness", "NKurtosis")
+colnames(yrNstats) <-Ncolnames
+
+yrEstats <- tapply(pwt9$E, pwt9$year, basicStats)
+yrEstats <- as.data.frame(yrEstats)
+yrEstats <- t(yrEstats)
+Ecolnames <- c( "Enobs", "ENAs", "EMinimum", "EMaximum", "E1. Quartile", "E3. Quartile", "EMean", "EMedian", "ESum", "ESE Mean", "ELCL Mean", "EUCL Mean", "EVariance", "EStdev", "ESkewness", "EKurtosis")
+colnames(yrEstats) <-Ecolnames
+
+yrLstats <- tapply(pwt9$L, pwt9$year, basicStats)
+yrLstats <- as.data.frame(yrLstats)
+yrLstats <- t(yrLstats)
+Lcolnames <- c( "Lnobs", "LNAs", "LMinimum", "LMaximum", "L1. Quartile", "L3. Quartile", "LMean", "LMedian", "LSum", "LSE Mean", "LLCL Mean", "LUCL Mean", "LVariance", "LStdev", "LSkewness", "LKurtosis")
+colnames(yrLstats) <-Lcolnames
+
+yrLhstats <- tapply(pwt9$Lh, pwt9$year, basicStats)
+yrLhstats <- as.data.frame(yrLhstats)
+yrLhstats <- t(yrLhstats)
+Lhcolnames <- c( "Lhnobs", "LhNAs", "LhMinimum", "LhMaximum", "Lh1. Quartile", "Lh3. Quartile", "LhMean", "LhMedian", "LhSum", "LhSE Mean", "LhLCL Mean", "LhUCL Mean", "LhVariance", "LhStdev", "LhSkewness", "LhKurtosis")
+colnames(yrLhstats) <-Lhcolnames
+
+yrwstats <- tapply(pwt9$w, pwt9$year, basicStats)
+yrwstats <- as.data.frame(yrwstats)
+yrwstats <- t(yrwstats)
+wcolnames <- c( "wnobs", "wNAs", "wMinimum", "wMaximum", "w1. Quartile", "w3. Quartile", "wMean", "wMedian", "wSum", "wSE Mean", "wLCL Mean", "wUCL Mean", "wVariance", "wStdev", "wSkewness", "wKurtosis")
+colnames(yrwstats) <-wcolnames
+
+yrYostats <- tapply(pwt9$Yo, pwt9$year, basicStats)
+yrYostats <- as.data.frame(yrYostats)
+yrYostats <- t(yrYostats)
+Yocolnames <- c( "Yonobs", "YoNAs", "YoMinimum", "YoMaximum", "Yo1. Quartile", "Yo3. Quartile", "YoMean", "YoMedian", "YoSum", "YoSE Mean", "YoLCL Mean", "YoUCL Mean", "YoVariance", "YoStdev", "YoSkewness", "YoKurtosis")
+colnames(yrYostats) <-Yocolnames
+
+yrYstats <- tapply(pwt9$Y, pwt9$year, basicStats)
+yrYstats <- as.data.frame(yrYstats)
+yrYstats <- t(yrYstats)
+Ycolnames <- c( "Ynobs", "YNAs", "YMinimum", "YMaximum", "Y1. Quartile", "Y3. Quartile", "YMean", "YMedian", "YSum", "YSE Mean", "YLCL Mean", "YUCL Mean", "YVariance", "YStdev", "YSkewness", "YKurtosis")
+colnames(yrYstats) <-Ycolnames
+
+yrWstats <- tapply(pwt9$W, pwt9$year, basicStats)
+yrWstats <- as.data.frame(yrWstats)
+yrWstats <- t(yrWstats)
+Wcolnames <- c( "Wnobs", "WNAs", "WMinimum", "WMaximum", "W1. Quartile", "W3. Quartile", "WMean", "WMedian", "WSum", "WSE Mean", "WLCL Mean", "WUCL Mean", "WVariance", "WStdev", "WSkewness", "WKurtosis")
+colnames(yrWstats) <-Wcolnames
+
+yrcstats <- tapply(pwt9$c, pwt9$year, basicStats)
+yrcstats <- as.data.frame(yrcstats)
+yrcstats <- t(yrcstats)
+ccolnames <- c( "cnobs", "cNAs", "cMinimum", "cMaximum", "c1. Quartile", "c3. Quartile", "cMean", "cMedian", "cSum", "cSE Mean", "cLCL Mean", "cUCL Mean", "cVariance", "cStdev", "cSkewness", "cKurtosis")
+colnames(yrcstats) <-ccolnames
+
+yrcnostats <- tapply(pwt9$cno, pwt9$year, basicStats)
+yrcnostats <- as.data.frame(yrcnostats)
+yrcnostats <- t(yrcnostats)
+cnocolnames <- c( "cnonobs", "cnoNAs", "cnoMinimum", "cnoMaximum", "cno1. Quartile", "cno3. Quartile", "cnoMean", "cnoMedian", "cnoSum", "cnoSE Mean", "cnoLCL Mean", "cnoUCL Mean", "cnoVariance", "cnoStdev", "cnoSkewness", "cnoKurtosis")
+colnames(yrcnostats) <-cnocolnames
+
+yrcastats <- tapply(pwt9$ca, pwt9$year, basicStats)
+yrcastats <- as.data.frame(yrcastats)
+yrcastats <- t(yrcastats)
+cacolnames <- c( "canobs", "caNAs", "caMinimum", "caMaximum", "ca1. Quartile", "ca3. Quartile", "caMean", "caMedian", "caSum", "caSE Mean", "caLCL Mean", "caUCL Mean", "caVariance", "caStdev", "caSkewness", "caKurtosis")
+colnames(yrcastats) <-cacolnames
+
+yrCstats <- tapply(pwt9$C, pwt9$year, basicStats)
+yrCstats <- as.data.frame(yrCstats)
+yrCstats <- t(yrCstats)
+Ccolnames <- c( "Cnobs", "CNAs", "CMinimum", "CMaximum", "C1. Quartile", "C3. Quartile", "CMean", "CMedian", "CSum", "CSE Mean", "CLCL Mean", "CUCL Mean", "CVariance", "CStdev", "CSkewness", "CKurtosis")
+colnames(yrCstats) <-Ccolnames
+
+yrCnostats <- tapply(pwt9$Cno, pwt9$year, basicStats)
+yrCnostats <- as.data.frame(yrCnostats)
+yrCnostats <- t(yrCnostats)
+Cnocolnames <- c( "Cnonobs", "CnoNAs", "CnoMinimum", "CnoMaximum", "Cno1. Quartile", "Cno3. Quartile", "CnoMean", "CnoMedian", "CnoSum", "CnoSE Mean", "CnoLCL Mean", "CnoUCL Mean", "CnoVariance", "CnoStdev", "CnoSkewness", "CnoKurtosis")
+colnames(yrCnostats) <-Cnocolnames
+
+yrCastats <- tapply(pwt9$Ca, pwt9$year, basicStats)
+yrCastats <- as.data.frame(yrCastats)
+yrCastats <- t(yrCastats)
+Cacolnames <- c( "Canobs", "CaNAs", "CaMinimum", "CaMaximum", "Ca1. Quartile", "Ca3. Quartile", "CaMean", "CaMedian", "CaSum", "CaSE Mean", "CaLCL Mean", "CaUCL Mean", "CaVariance", "CaStdev", "CaSkewness", "CaKurtosis")
+colnames(yrCastats) <-Cacolnames
+
+yrKstats <- tapply(pwt9$K, pwt9$year, basicStats)
+yrKstats <- as.data.frame(yrKstats)
+yrKstats <- t(yrKstats)
+Kcolnames <- c( "Knobs", "KNAs", "KMinimum", "KMaximum", "K1. Quartile", "K3. Quartile", "KMean", "KMedian", "KSum", "KSE Mean", "KLCL Mean", "KUCL Mean", "KVariance", "KStdev", "KSkewness", "KKurtosis")
+colnames(yrKstats) <-Kcolnames
+
+yrynstats <- tapply(pwt9$yn, pwt9$year, basicStats)
+yrynstats <- as.data.frame(yrynstats)
+yrynstats <- t(yrynstats)
+yncolnames <- c( "ynnobs", "ynNAs", "ynMinimum", "ynMaximum", "yn1. Quartile", "yn3. Quartile", "ynMean", "ynMedian", "ynSum", "ynSE Mean", "ynLCL Mean", "ynUCL Mean", "ynVariance", "ynStdev", "ynSkewness", "ynKurtosis")
+colnames(yrynstats) <-yncolnames
+
+yrywstats <- tapply(pwt9$yw, pwt9$year, basicStats)
+yrywstats <- as.data.frame(yrywstats)
+yrywstats <- t(yrywstats)
+ywcolnames <- c( "ywnobs", "ywNAs", "ywMinimum", "ywMaximum", "yw1. Quartile", "yw3. Quartile", "ywMean", "ywMedian", "ywSum", "ywSE Mean", "ywLCL Mean", "ywUCL Mean", "ywVariance", "ywStdev", "ywSkewness", "ywKurtosis")
+colnames(yrywstats) <-ywcolnames
+
+yrylstats <- tapply(pwt9$yl, pwt9$year, basicStats)
+yrylstats <- as.data.frame(yrylstats)
+yrylstats <- t(yrylstats)
+ylcolnames <- c( "ylnobs", "ylNAs", "ylMinimum", "ylMaximum", "yl1. Quartile", "yl3. Quartile", "ylMean", "ylMedian", "ylSum", "ylSE Mean", "ylLCL Mean", "ylUCL Mean", "ylVariance", "ylStdev", "ylSkewness", "ylKurtosis")
+colnames(yrylstats) <-ylcolnames
+
+yryhstats <- tapply(pwt9$yh, pwt9$year, basicStats)
+yryhstats <- as.data.frame(yryhstats)
+yryhstats <- t(yryhstats)
+yhcolnames <- c( "yhnobs", "yhNAs", "yhMinimum", "yhMaximum", "yh1. Quartile", "yh3. Quartile", "yhMean", "yhMedian", "yhSum", "yhSE Mean", "yhLCL Mean", "yhUCL Mean", "yhVariance", "yhStdev", "yhSkewness", "yhKurtosis")
+colnames(yryhstats) <-yhcolnames
+
+yreprstats <- tapply(pwt9$epr, pwt9$year, basicStats)
+yreprstats <- as.data.frame(yreprstats)
+yreprstats <- t(yreprstats)
+eprcolnames <- c( "eprnobs", "eprNAs", "eprMinimum", "eprMaximum", "epr1. Quartile", "epr3. Quartile", "eprMean", "eprMedian", "eprSum", "eprSE Mean", "eprLCL Mean", "eprUCL Mean", "eprVariance", "eprStdev", "eprSkewness", "eprKurtosis")
+colnames(yreprstats) <-eprcolnames
+
+yrknstats <- tapply(pwt9$kn, pwt9$year, basicStats)
+yrknstats <- as.data.frame(yrknstats)
+yrknstats <- t(yrknstats)
+kncolnames <- c( "knnobs", "knNAs", "knMinimum", "knMaximum", "kn1. Quartile", "kn3. Quartile", "knMean", "knMedian", "knSum", "knSE Mean", "knLCL Mean", "knUCL Mean", "knVariance", "knStdev", "knSkewness", "knKurtosis")
+colnames(yrknstats) <-kncolnames
+
+yrkwstats <- tapply(pwt9$kw, pwt9$year, basicStats)
+yrkwstats <- as.data.frame(yrkwstats)
+yrkwstats <- t(yrkwstats)
+kwcolnames <- c( "kwnobs", "kwNAs", "kwMinimum", "kwMaximum", "kw1. Quartile", "kw3. Quartile", "kwMean", "kwMedian", "kwSum", "kwSE Mean", "kwLCL Mean", "kwUCL Mean", "kwVariance", "kwStdev", "kwSkewness", "kwKurtosis")
+colnames(yrkwstats) <-kwcolnames
+
+yrklstats <- tapply(pwt9$kl, pwt9$year, basicStats)
+yrklstats <- as.data.frame(yrklstats)
+yrklstats <- t(yrklstats)
+klcolnames <- c( "klnobs", "klNAs", "klMinimum", "klMaximum", "kl1. Quartile", "kl3. Quartile", "klMean", "klMedian", "klSum", "klSE Mean", "klLCL Mean", "klUCL Mean", "klVariance", "klStdev", "klSkewness", "klKurtosis")
+colnames(yrklstats) <-klcolnames
+
+yrkhstats <- tapply(pwt9$kh, pwt9$year, basicStats)
+yrkhstats <- as.data.frame(yrkhstats)
+yrkhstats <- t(yrkhstats)
+khcolnames <- c( "khnobs", "khNAs", "khMinimum", "khMaximum", "kh1. Quartile", "kh3. Quartile", "khMean", "khMedian", "khSum", "khSE Mean", "khLCL Mean", "khUCL Mean", "khVariance", "khStdev", "khSkewness", "khKurtosis")
+colnames(yrkhstats) <-khcolnames
+
+yrestats <- tapply(pwt9$e, pwt9$year, basicStats)
+yrestats <- as.data.frame(yrestats)
+yrestats <- t(yrestats)
+ecolnames <- c( "enobs", "eNAs", "eMinimum", "eMaximum", "e1. Quartile", "e3. Quartile", "eMean", "eMedian", "eSum", "eSE Mean", "eLCL Mean", "eUCL Mean", "eVariance", "eStdev", "eSkewness", "eKurtosis")
+colnames(yrestats) <-ecolnames
+
+yrepsstats <- tapply(pwt9$eps, pwt9$year, basicStats)
+yrepsstats <- as.data.frame(yrepsstats)
+yrepsstats <- t(yrepsstats)
+epscolnames <- c( "epsnobs", "epsNAs", "epsMinimum", "epsMaximum", "eps1. Quartile", "eps3. Quartile", "epsMean", "epsMedian", "epsSum", "epsSE Mean", "epsLCL Mean", "epsUCL Mean", "epsVariance", "epsStdev", "epsSkewness", "epsKurtosis")
+colnames(yrepsstats) <-epscolnames
+
+yrepsnostats <- tapply(pwt9$epsno, pwt9$year, basicStats)
+yrepsnostats <- as.data.frame(yrepsnostats)
+yrepsnostats <- t(yrepsnostats)
+epsnocolnames <- c( "epsnonobs", "epsnoNAs", "epsnoMinimum", "epsnoMaximum", "epsno1. Quartile", "epsno3. Quartile", "epsnoMean", "epsnoMedian", "epsnoSum", "epsnoSE Mean", "epsnoLCL Mean", "epsnoUCL Mean", "epsnoVariance", "epsnoStdev", "epsnoSkewness", "epsnoKurtosis")
+colnames(yrepsnostats) <-epsnocolnames
+
+yrepsastats <- tapply(pwt9$epsa, pwt9$year, basicStats)
+yrepsastats <- as.data.frame(yrepsastats)
+yrepsastats <- t(yrepsastats)
+epsacolnames <- c( "epsanobs", "epsaNAs", "epsaMinimum", "epsaMaximum", "epsa1. Quartile", "epsa3. Quartile", "epsaMean", "epsaMedian", "epsaSum", "epsaSE Mean", "epsaLCL Mean", "epsaUCL Mean", "epsaVariance", "epsaStdev", "epsaSkewness", "epsaKurtosis")
+colnames(yrepsastats) <-epsacolnames
+
+yrrhostats <- tapply(pwt9$rho, pwt9$year, basicStats)
+yrrhostats <- as.data.frame(yrrhostats)
+yrrhostats <- t(yrrhostats)
+rhocolnames <- c( "rhonobs", "rhoNAs", "rhoMinimum", "rhoMaximum", "rho1. Quartile", "rho3. Quartile", "rhoMean", "rhoMedian", "rhoSum", "rhoSE Mean", "rhoLCL Mean", "rhoUCL Mean", "rhoVariance", "rhoStdev", "rhoSkewness", "rhoKurtosis")
+colnames(yrrhostats) <-rhocolnames
+
+yrrstats <- tapply(pwt9$r, pwt9$year, basicStats)
+yrrstats <- as.data.frame(yrrstats)
+yrrstats <- t(yrrstats)
+rcolnames <- c( "rnobs", "rNAs", "rMinimum", "rMaximum", "r1. Quartile", "r3. Quartile", "rMean", "rMedian", "rSum", "rSE Mean", "rLCL Mean", "rUCL Mean", "rVariance", "rStdev", "rSkewness", "rKurtosis")
+colnames(yrrstats) <-rcolnames
+
+yrkapstats <- tapply(pwt9$kap, pwt9$year, basicStats)
+yrkapstats <- as.data.frame(yrkapstats)
+yrkapstats <- t(yrkapstats)
+kapcolnames <- c( "kapnobs", "kapNAs", "kapMinimum", "kapMaximum", "kap1. Quartile", "kap3. Quartile", "kapMean", "kapMedian", "kapSum", "kapSE Mean", "kapLCL Mean", "kapUCL Mean", "kapVariance", "kapStdev", "kapSkewness", "kapKurtosis")
+colnames(yrkapstats) <-kapcolnames
+
+yrkapnostats <- tapply(pwt9$kapno, pwt9$year, basicStats)
+yrkapnostats <- as.data.frame(yrkapnostats)
+yrkapnostats <- t(yrkapnostats)
+kapnocolnames <- c( "kapnonobs", "kapnoNAs", "kapnoMinimum", "kapnoMaximum", "kapno1. Quartile", "kapno3. Quartile", "kapnoMean", "kapnoMedian", "kapnoSum", "kapnoSE Mean", "kapnoLCL Mean", "kapnoUCL Mean", "kapnoVariance", "kapnoStdev", "kapnoSkewness", "kapnoKurtosis")
+colnames(yrkapnostats) <-kapnocolnames
+
+yrkapastats <- tapply(pwt9$kapa, pwt9$year, basicStats)
+yrkapastats <- as.data.frame(yrkapastats)
+yrkapastats <- t(yrkapastats)
+kapacolnames <- c( "kapanobs", "kapaNAs", "kapaMinimum", "kapaMaximum", "kapa1. Quartile", "kapa3. Quartile", "kapaMean", "kapaMedian", "kapaSum", "kapaSE Mean", "kapaLCL Mean", "kapaUCL Mean", "kapaVariance", "kapaStdev", "kapaSkewness", "kapaKurtosis")
+colnames(yrkapastats) <-kapacolnames
+
+descr <- cbind(des, yrNstats, yrEstats, yrLstats, yrLhstats, yrwstats, yrYostats, yrYstats, yrWstats, yrcstats, yrcnostats, yrcastats, yrCstats, yrCnostats, yrCastats, yrKstats, yrynstats, yrywstats, yrylstats, yryhstats, yreprstats, yrknstats, yrkwstats, yrklstats, yrkhstats, yrestats, yrepsstats, yrepsnostats, yrepsastats, yrrhostats, yrrstats, yrkapstats, yrkapnostats, yrkapastats)
+colnames(descr)[1] <- "year"
+# descr
+plot(descr$year, descr$NMedian, ylim=c(0,70), lwd=1, type="line", main="Population: mean & median", sub="Source: PWT 9.0", xlab="Year", ylab="Millions")
+polygon(x=c(descr$year, rev(descr$year)), y=c(descr$`NLCL Mean`, rev(descr$`NUCL Mean`)), col="lightgray", border=NA)
+lines(descr$year, descr$NMean, col="black", lwd=3)
+lines(descr$year, descr$`NLCL Mean`, col="black", lty=2)
+lines(descr$year, descr$`NUCL Mean`, col="black", lty=2)
+legend("topleft", c("Mean","Median", "95% CI"), lwd=c(3,1,10), lty=c(1,1,1), col=c("black","black", "lightgray"))
+@
+
+Employment:
+<<fig=TRUE>>=
+plot(descr$year, descr$EMedian, ylim=c(0,30), lwd=1, type="line", main="Employment: mean, median, and 95% CI", ylab="Millions", xlab="Year")
+polygon(x=c(descr$year, rev(descr$year)), y=c(descr$`ELCL Mean`, rev(descr$`EUCL Mean`)), col="lightgray", border=NA)
+lines(descr$year, descr$EMean, col="black", lwd=3)
+lines(descr$year, descr$`ELCL Mean`, col="black", lty=2)
+lines(descr$year, descr$`EUCL Mean`, col="black", lty=2)
+legend("topleft", c("Mean","Median", "95% CI"), lwd=c(3,1,10), lty=c(1,1,1), col=c("black","black", "lightgray"))
+@
+
+
+
+[Include TFP.  How about doing all this at GDP evaluated at average annual exchange rate?]
+
+\section{Theoretical framework}
+
+Historical materialism (relation between productive forces of labor and the social relations of production) and political economy (output as value and as the product of capital, class struggle and competition). 
+
+There are two clearly distinctive ways of interpreting historical materialism:
+\begin{enumerate}
+\item The productive forces constrain/enable the collective choice of social relations of production.  The social relations of production constrain/enable the collective choice of legal and political systems.  The legal and political system constrain/enable the ideas of people about politics, law, and economics.  Yet, the purposeful actions of individuals change politics, and through them laws, and through them economic structures, and through them technological conditions.  Productive forces, economic structures, and legal/political/ideological superstructure are not different ``things,'' but the same evolving complex society viewed in its different aspects or historical tempos (like anatomy, physiology, and psychology are not different ``things,'' but different aspects of the same evolving human body).
+\item Engels argued along these lines in some of his works.  Marx also suggested some of these ideas. People change their ideas because changes in the political, legal, and economic conditions compel them to change their ideas.  This is somewhat plausible: Insofar as you are assuming the absence of socialism, or if you are thinking as something outside of socialism.  The world as it exists in abstraction of socialism.  As a rule, people in our society are atomized, subject to the inertia of existing political, legal, and economic conditions, which are thus because that is what existing productivity allows.
+
+\end{enumerate}
+
+The framework is explicitly Marxian.
+
+The productive forces as developed historically under capitalism can be captured by the following state variables:
+\begin{enumerate}
+\item $N$: Population
+\item $E$: Employment
+\item $Y$: Output
+\item $K$: Capital stock (wealth controlled by capital)
+\end{enumerate}
+
+The following ratios also capture the productive forces under capitalism:
+\begin{enumerate}
+\item $y \equiv Y/N$: Per-capita output
+\item $\bar{y} \equiv Y/E$: Per-worker output
+\item $\tilde{y} \equiv Y/L$: Per-hour output
+\item $k \equiv K/N$: Per-capita capital
+\item $\bar{k} \equiv Y/E$: Per-worker capital
+\item $\tilde{y} \equiv Y/L$: Per-hour capital
+\item $\rho \equiv Y/K$: Capital effectiveness
+\end{enumerate}
+
+The ``economic'' class balance of forces (a summary index of the relations of production) is captured by the following ratios, which are mathematically equivalent:
+\begin{enumerate}
+\item $\omega \equiv W/Y$: Wage share
+\item $\pi \equiv \Pi/Y = 1 - \omega$: Profit share
+\item $e \equiv \Pi/W$: Rate of exploitation
+\end{enumerate}
+
+Also some measures of unemployment or slack in the economy.  For that, estimate an exponential trend of $Y$ conditional on $N$ (distributed lag model), and fit it on the observed $Y$.  The residuals are a measure of slack in the economy, which increases the political power over the workers.
+
+Another approach: Data from ILO on workers' struggles.  A measure of how combative workers are in a given period of time.  Workers' struggles conditioned on $e$ or $\omega$.
+
+The profit rate summarizes the condition of capital.  It synthesizes two factors: (1) the ``economic'' class balance of forces and (2) the conditions of inter-capitalist competition:
+\begin{eqnarray}
+r \equiv \frac{\Pi}{K} = \frac{\Pi}{Y} \frac{Y}{K} = \pi \rho, \\
+r = \frac{\Pi}{W} \frac{W}{Y} \frac{Y}{K} = e \omega \rho.
+\end{eqnarray}
+
+Capital productivity captures the conditions of inter-capitalist competition.
+
+For political conditions, I need to expand the data set.  ILO has a lot on the strength of workers.  Also, one needs to complement that with political parties in office in country $i$ and year $t$.
+
+
+\section{Global}
+
+Global results and their discussion here.
+
+\section{International (1)}
+
+The results for variables aggregated by population.
+
+\section{International (2)}
+
+The results for variables aggregated by country.
+
+\section{Poor vs. rich}
+
+Here using the classification by high income vs. low income.  Level of capitalist development (use $y$ or $\tilde{y}$ or $\bar{y}$ for that).
+
+\section{Groups}
+
+Using geographic, ethnic, cultural, linguistic classification criteria.  Also, largest ten countries by $Y$ and $N$.
+
+\section{Largest ten countries}
+
+United States, China, Japan, Germany, Brazil, India, etc.  One by one.
+
+Combine here with OECD national accounts and more detailed stats.
+
+
+\section{Historical evolution}
+
+The methodology used to study the evolution of postwar global capitalism is that of:
+
+\begin{itemize}
+\item Time series econometrics
+\item Panel econometrics with time effects
+\end{itemize}
+
+Time series econometrics follows a successive approximations approach, starting from the most restrictive assumptions (most abstract) to the least restrictive (more concrete and complex).  
+
+First, I take each relevant time series in turn under the assumption of stationarity for ratios and changes in levels and growth rates.  Use of ARMA models.
+
+Second, I assume deterministic trend of relevant levels, and focus on the de-trended series (deviations from the long-run trend). Next stochastic trends.
+
+Third, breaks using Chow and Quandt Likelihood Ratios.
+
+Fourth, I assume relationships among variables: Distributed lag models. 
+
+Fifth, I work on co-integration and VARMA EC modeling.
+
+\begin{eqnarray}
+y = 2 x^3
+\end{eqnarray}
+
+
+\end{document}

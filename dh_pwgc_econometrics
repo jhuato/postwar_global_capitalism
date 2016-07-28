@@ -1,0 +1,23 @@
+Main point: the essential trend of postwar global capitalism and how its structure has evolved.  The rate of exploitation over time, its national dispersion, and its components:
+\[
+r = e \omega \rho = \pi \rho, \\
+\pi = \frac{r}{\rho}
+\log \pi = \log r - \log \rho
+\]
+
+Interpret the identity as a function, i.e. with $\pi$ as a function of $r$ and $\rho$ over time, and model $\log \pi_{i, t}$ as an AR($p$) process with extra regressors $\log r_{i, t}, \ldots, \log r_{i, t-k}$ and $\log \rho_{i, t}, \ldots, \log r_{i, t-n}$.  In other words,
+\[
+\log \pi_{i,t} = \beta_0 + \beta_1 \log \pi_{i, t-1} + \ldots + \beta_p \log \pi_{i, t-p} + \delta_0
+\log r_{i, t} + \delta_1 \log r_{i, t-1} + \ldots + \delta_q \log r_{t, t-q} + \gamma_0 \log \rho_{i, t} + \gamma_1 \log \rho_{i, t-1} + \ldots + \gamma_m \log \rho_{i, t-m} + \epsilon_{i,t}
+\]
+
+with $\epsilon \sim N(0, \sigma^2)
+
+What is the rationale to view $e$ as a function of $r$, $\omega$, and $\rho$?
+
+Over the medium term, the economic class balance of forces is subject to the vagaries of capitalist accumulation, which at the level of individual capitals, is driven by $r$, 
+
+
+* * * 
+
+Before one does modeling, one may try to use regular

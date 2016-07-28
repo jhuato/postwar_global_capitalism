@@ -1,0 +1,22 @@
+\documentclass{article}
+
+\begin{document}
+\SweaveOpts{concordance=TRUE}
+
+An arithmetic operation here:
+
+<<eval=TRUE>>=
+2+2
+@
+
+Here I go back to \LaTeX.  And then a curve:
+
+<<fig=TRUE>>=
+curve(1/x, -2,2, lwd=2, col="violet")
+@
+
+Text here.
+
+
+
+\end{document}

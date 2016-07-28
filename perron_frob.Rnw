@@ -1,0 +1,51 @@
+\documentclass{article}
+
+\begin{document}
+\SweaveOpts{concordance=TRUE}
+
+To grasp the Perron-Frobenius theorem:
+
+<<eval=TRUE>>=
+library(expm)
+A <- matrix(c(1, -3, -6, 3, 7, 6, -3,-3,-2), nrow=3)
+A
+r <- eigen(A)
+r$values
+r$vectors
+maxlambda <- max(r$values)
+maxlambda
+spect <- max(abs(r$values))
+spect
+A1 <- ((1/maxlambda) * A)%^%1
+A2 <- ((1/maxlambda) * A)%^%2
+A3 <- ((1/maxlambda) * A)%^%3
+A4 <- ((1/maxlambda) * A)%^%4
+A5 <- ((1/maxlambda) * A)%^%5
+A6 <- ((1/maxlambda) * A)%^%6
+A7 <- ((1/maxlambda) * A)%^%7
+A8 <- ((1/maxlambda) * A)%^%8
+A9 <- ((1/maxlambda) * A)%^%9
+A10 <- ((1/maxlambda) * A)%^%10
+A1
+A2
+A3
+A4
+A5
+A6
+A7
+A8
+A9
+A10
+@
+
+Is $A$ a primitive matrix?  Take its fifth power to test it.
+
+<<eval=TRUE>>=
+B <- A%^%5
+B
+@
+
+
+
+
+\end{document}

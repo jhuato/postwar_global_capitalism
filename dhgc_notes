@@ -1,0 +1,21 @@
+The descriptive part is about grasping the time trend and national dispersion of the primary and secondary variables.
+
+Questions to keep in mind when examining the data along the time dimension: Trend? Cycles? 
+
+When considering variation across countries:
+Has variation increased (int'l inequality, risk)
+Also regional variation (rich/poor, geographic region)
+
+Primary productive force variables: N, E, L, H-adj L, Y, Yo, K
+Primary economic variables: W, C, and therefore Y-W, Yo-C
+Secondary productive force variables: Y/N, Y/E, Y/L, Y/H-adj L, K/N, K/E, K/L, K/H-adj L, Y/K (considered in the longer run timeframe)
+Secondary essential economic variables: omega, c, e, eps
+Secondary superficial economic variables: rho, r, kappa
+
+
+Theorizing...
+
+My main theoretical framework is:
+
+e = e(rho, tfp, r or kappa, and political variables, country fixed effects, time fixed effects)
+

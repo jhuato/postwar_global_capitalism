@@ -1,0 +1,108 @@
+\chapter{Introduction}
+
+\section{Goal of the book}
+What is the fundamental structure of modern global society?  How has its fundamental structure evolved since the 1970s to become what it is today?  These are the main questions this book seeks to answer through the examination of the Penn World Tables 9.0 (PWT9), a set of internationally comparable national-accounting annual data covering 182 countries over the 1950-2014 period.
+
+The phrase ``structure of modern global society'' needs clarification.  The term ``structure'' refers to a phenomenon that, though constituted by individual components, cannot be reduced to these components taken in isolation.  It is rather an ``emergent property'' of all these elements combined.  A ``structure'' is a meta-reality, a phenomenon whose existence transcends that of its elements.  Thus, a society, our modern global society to be more specific, can be viewed as a complex array of intertwined social structures.  The primary components of modern global society are the more than 7 billion persons currently living on earth. The phenomenon called ``modern global society'' is the resultant of the inter-relations among these individuals.
+
+At first sight, the world's society is constituted typically by national states. Individuals are organized politically as citizens or subjects of a national state.  The interrelations among these discrete political entities falls under the rubric of ``international'' relations. Thus, ``international'' refers to the inter-relation among national states, i.e. the internal composition or structure of ``global'' society.  The term ``global'' refers to the fact that the commonalities that connect all humans in the world are much more fundamental, organic, and fluid than the political structures of the national states suggest.  In fact, the political structures are rather superficial forms in which the deeper structures connecting the world population appear.
+
+First, I summarize the theoretical framework used in this study, drawn from Karl Marx's \emph{Capital}, and show then the rough correspondence between the national-accounting categories of the PWT9 and Marx's own categories.
+
+Second, using basic sample statistics, histograms, density curves, scatterplots, and time-series plots, I \emph{describe} the structure and evolution of modern global society.
+
+Third, using the methodology of modern time-series and panel econometrics, I estimate and test a host of hypotheses relating the main variables involved.
+
+In the concluding section, I offer a summary or synthesis of my findings.
+
+
+\section{Descriptive stage}
+
+In the descriptive stage, for country $i \in [1, 182]$ and year $t \in [1950, 2014]$, I summarize (i) the international distribution and (ii) the time evolution of (1) the productivity of capital $\rho_{it} \equiv Y/K$, (2) the rate of capitalist exploitation $e_{it} \equiv (Y-W)/W$ and $\epsilon_{it} \equiv (Y^o-C)/C$, and (3) the profit rate $r_{it} \equiv (Y-W)/K$ and $\kappa \equiv (Y^o-C)/K$.
+
+To provide context on the international distribution and time evolution of the technical conditions of production, aside from the view supplied by $\rho$, I also examine (i) the cross-country distribution and (ii) time evolution of (4) per-capita productivity $y \equiv Y/N$, (5) per-worker productivity $y_w = Y/E$, (6) hourly average productivity $y_l = Y/L$, and (7) skilled-adjusted hourly productivity $y_h = Y/L_h$.
+
+[I need sample summary statistics: valid number of observations, mean, min and max, standard deviation, coefficient of variation, t statistic.  For arrays of variables, correlation coefficients.  Scatterplots (with countries or years using different colors).  For typical years: 1970, 1990, 2010.]
+
+\subsection{Time series aspect}
+
+To pin down the time evolution of $(\rho, e, \epsilon, r, \kappa)$, I focus on three types of aggregates: (1) global (``unweighted''), (2) country-weighted international, and (3) population-weighted international.  Each of these aggregates provides a complementary side view of the subject matter.
+
+For a given year $t$, the global categories $(\rho_t, e_t, \epsilon_t, r_t, \kappa_t)$ are computed from the global aggregates  of $(Y_t, Y^o_t, W_t, C_t, K_t)$. The latter aggregates result from adding up values across countries, i.e. $X_t = \sum_i X_{it}$, where $X \in (Y, Y^o, W, C, K)$.  These ``unweighted'' global aggregates capture the essential social nature of capital as self-expanding value.  The activity of different countries is aggregated in value terms using internationally-comparable (PPP) dollars as weights.
+
+A second set of aggregates defines the category $x_t \equiv \sum_i x_{it}$, where $x \in (\rho, e, \epsilon, r, \kappa)$, and adds it up across countries.  The result is a set of country-weighted categories. These aggregates take seriously the fact that, under international law, say within the framework of the United Nations General Assembly, each country member is supposed to have equal rights and obligations.  This legal framework is an actually-existing international social structure.  However, since the economic, demographic, territorial, and military power of each country determines in fact the balance of forces in global capitalist society, this legal framework is largely fictional, tenous at best.  It is, however, interesting to look at this aspect of global capitalism.  Think of it as based on the assumption that, though in each individual country capital belongs to the capitalists (operating, but not necessarily residing in that country) and, as a consequence, the net output or income produced by the workers in that country is appropriated by the capitalists, with only a portion of it returned to the workers in the forms of wages or workers' consumption, the distribution of income between workers and capitalists in a country is taken as weighing the same as the distribution of income in any other country, large or small, rich or poor.
+
+Countries represent relatively coherent legal and political structures, and such they are units.  This dimension reflects the ability of a community, usually a nation to get its political act together.  So, it captures ethnic and cultural elements.
+
+A third set of aggregates defines the category $x_t \equiv \sum_i x_{it}$, where $x \in (\rho, e, \epsilon, r, \kappa)$, and averages it across countries using the population of each country as the weights in the average.  In other words, the distribution of income or profit rate or capital productivity in a highly populated country plays a bigger role in determining the average than income distribution, profit rate, or capital productivity in a low population country, where the weight is, again, proportional to the population.  This offers another angle.  Large countries (by population) are coherent political units with a larger clout in the international system, aside from their economic clout.  Demographics matters.  The ability of China to industrialize at such fast pace in the late postwar period is a testimonial to this.  It is about civilization and (political, cultural, linguistic, etc.) cooperation at a mass scale.
+
+\section{Cross-sectional aspect}
+
+To capture the international structure of these categories $(\rho, e, \epsilon, r, \kappa, y, y_w, y_l, y_h)$ in a given year or period, I focus on their cross-country statistical distribution (unweighted and, in the case of $(\rho, e, \epsilon, r, \kappa)$, population-weighted) with the aid of scatterplots, histograms, and kernel density graphs.
+
+\section{Panel integration}
+
+Once the descriptive part is covered, I test a host of hypotheses, which regarded as a whole, allowed me to characterize theoretically the evolving structure of postwar global capitalism.  More specifically, I take the data sets, as expanded by the calculation of $(\rho, e, \epsilon, r, and \kappa)$, to estimate a host of models using time-series, cross-sectional, and panel econometric methods.  Each of these hypotheses is duly justified theoretically, i.e. on the grounds provided by Marxian political economy.  Each of these models, by itself, is insufficient.  It is only the totality of them that amounts to, to the best of my knowledge, the most detailed and theoretically and empirically supported characterization of postwar global capitalist society.
+
+\section{Theoretical framework}
+
+The theoretical framework is explicitly Marxian.  The Marxian framework contains (1) dialectical materialism (cognition as a process of appropriation of the social totality by successive approximations), historical materialism (the intertwined layers of social objectivity that constitute the social formation, erected on the bedframe of the productive forces of labor), critical political economy from the viewpoint of socialism (focus on the rate of exploitation and, the view of capitalist competition, the profit rate), i.e. the movement of the direct producers to appropriate their social relations (so, while the measures are from the viewpoint of capital, the purpose is that of overcoming capitalism).
+
+The Marxian political economy section is bound to be controversial.  It outlines a proper critique of modern economics that existing Marxist thinkers have failed to provide.  My views on value and capital, which I try to argue convincingly, depart significantly from the existing ones in the Marxist literature.
+
+Cognition is a dialectical process, i.e. a process of ``successive approximations,'' of gradual reconstruction of the concrete.  Knowledge comes in ``layers,'' each of them supported on a scafolding of hypotheses (Asimov). 
+
+The national accounting measures compiled in the PWT9 represent a vast amount of effort aimed at measuring capitalist activity.  Roughly, the availability of compatible, internationally comparable, national accounting data correlates with the capitalist character of the activity.
+
+The unavoidable sources of ``error'' are (1) measurement, (2) conceptualization, and (2) theorization or ``modeling.''  Error can be minimized by a thorough, multi-sided examination of the data set.
+
+As a social formation, postwar global capitalism is viewed as a complex, concrete historical totality constituted by tightly intertwined ``aspects'' or ``side views.''  Each of these aspects refers to a particular social structure or ``layer'' with a varying degree of social autonomy or objectivity erected upon the productive forces of labor.  
+
+In particular, these structures are: (1) economic (the social relations of production), (2) legal and political (the legal and political superstructure), (3) moral and ideological (the sets of norms and belief systems with which people rationalize and evaluate their individual actions).  Within the economic structure of capitalism, I distinguish between two aspects: (1) the class balance of forces as characterized by the wage share $\omega \equiv W/Y$, the profit share $\pi \equiv (Y-W)/Y$, or the rate of capitalist exploitation $e = (Y-W)/W$, and (2) the intercapitalist balance of forces, summarized by the profit rate $r \equiv (Y-W)/K$.  Alternatively, (1) by the consumption share $c \equiv C/Y^o$, the nonconsumption share $i \equiv (Y^o-C)/Y$, or the ratio of consumption to nonconsumption (or ``gross capital accumulation''), and (2) by the rate of gross capitalist accumulation $\kappa \equiv (Y^o-C)/K$.
+
+
+\section{Data utilized}
+
+PWT9.
+
+Regarding conceptualization, $Y$ is problematic, because it includes (1) nonproductive activities, activities that enable the ``change of forms'' in $M-C-M'$ and (2) social-hierarchy activities (an estimate of the ``value added'' by the state-managed activities is ``imputed'') [the totality of this can be viewed as activity aimed at the enforcement of social hierarchy, or part of it can be viewed as somewhat ``for'' (if not of and by) the workers, e.g. education, health care, other social programs, exclusive of military, policing, etc., both views are valid in some sense].  This is double counting, as activities that only keep the social order should be viewed as social consumption, not production.  Other issues: environmental ``goods.'' My take on this.  Goods are what capital says are good.  Class dispute over what's good and what's bad.
+
+$W$ is labor income, inclusive of the salaries and compensation of supervisors and managers, which should be regarded as part of gross profit (or surplus value).  In other words, $W$ overestimates the actual wages of workers, in the productive and nonproductive sector, inclusive of rank-and-file public employees.  Similarly, $C$ is consumption, inclusive of consumption by the capitalists (in the productive and nonproductive sectors) and their state representatives (the top layer of the bureaucracy and ``political class'').
+
+However, if the internal components of $Y$, $W$, and $C$ remain roughly constant over time, then the trends shown will not be misleading.
+
+$K$ is problematic, but not in the sense of Cambridge.  Technical issues regarding the use of ``perpetual-inventories'' method.  They smooth the data.  Stock market data, much more volatile, provide a different sense of this.
+
+An advantage of using consumption as a proxy for wages is that the data are more available.  Only 20% missing values.  Whereas 40% of wage data are missing.
+
+- Organization of the book.
+
+Framework
+
+- Dialectical materialism: Humans are a part of nature with specific properties.  Cognition as a dialectical process.  Hypotheses and successive approximations.
+
+- Historical materialism: Production = history.  Labor.
+
+- Political economy: Value, surplus value.  The proper critique of economics: Value as measure of relative social importance.
+
+Empirical material: PWT 9.0
+
+- Description of data set
+- National accounting categories and their mapping to Marxian categories
+
+Descriptive part
+
+
+Theoretical part
+- Time series VAR
+- Cross sectional
+- Panel
+
+Conclusions
+
+Why start with a view of capitalism as a concrete historical totality?  Why not like Postone (Adobe Cloud), begin with a ``reconceptualization'' of Marx's view of capitalism on the basis of Grundrisse or what have you?  Well, I do not discard existing theory.  I take it as a set of hypotheses to be tested against empirical evidence as empirical evidence represents actual historical practice.
+
+
+
+
+
