@@ -1,0 +1,6 @@
+download.file("http://dl.dropboxusercontent.com/u/214159700/RIntro.zip", "Rintro.zip")
+unzip("Rintro.zip")
+load("begin.RData")
+install.libs()
+ls()
+source(file.choose(), echo=T)

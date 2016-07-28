@@ -1,0 +1,35 @@
+x<-c(609, 629, 620, 564, 645, 493, 606, 629, 660, 630, 660, 629)
+y<-c(241, 222, 233, 207, 247, 189, 226, 240, 226, 215, 226, 226)
+z<-c(0, 1, 1, 0, 1, 0, 1, 1, 1, 1, 0, 0)
+stripchart(x, method="stack")
+hist(x, col="gray", freq=F, ylim=c(0,0.018))
+rug(x)
+lines(density(sort(x)), col="black")
+xx <-seq(from=400, to=750, by=1)
+yy <- dnorm(xx, mean(x), sd(x))
+lines(xx,yy, lty="dotted")
+
+plot(density(sort(x)), fill=T, col="black", main="Density of x (vs. normal)")
+rug(x)
+xx <-seq(from=400, to=750, by=1)
+yy <- dnorm(xx, mean(x), sd(x))
+lines(xx,yy, lty="dotted")
+legend("topleft",legend=c("density", "normal"), lty=c("solid", "dotted"))
+
+
+d <- density(x)
+plot(d, col="black", main="Density of x (vs. normal)")
+polygon(d, col="light gray")
+rug(x)
+xx <-seq(from=400, to=750, by=1)
+yy <- dnorm(xx, mean(x), sd(x))
+lines(xx,yy, lty="dotted")
+legend("topleft",legend=c("density", "normal"), lty=c("solid", "dotted"))
+
+hist(y, col=1, border="red")
+rug(y)
+
+boxplot(x~z, horizontal=T)
+abline(v=mean(x), lty=2, lwd=2)
+legend("topleft",legend="Grand mean", lty=2, lwd=2)
+
