@@ -11,7 +11,7 @@ Interpret the identity as a function, i.e. with $\pi$ as a function of $r$ and $
 \log r_{i, t} + \delta_1 \log r_{i, t-1} + \ldots + \delta_q \log r_{t, t-q} + \gamma_0 \log \rho_{i, t} + \gamma_1 \log \rho_{i, t-1} + \ldots + \gamma_m \log \rho_{i, t-m} + \epsilon_{i,t}
 \]
 
-with $\epsilon \sim N(0, \sigma^2)
+with $\epsilon \sim N(0, \sigma^2)$.
 
 What is the rationale to view $e$ as a function of $r$, $\omega$, and $\rho$?
 
@@ -20,4 +20,4 @@ Over the medium term, the economic class balance of forces is subject to the vag
 
 * * * 
 
-Before one does modeling, one may try to use regular
+Before one does modeling, one may try to use regular....
