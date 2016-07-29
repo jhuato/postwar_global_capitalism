@@ -1,3 +1,5 @@
+# Rubin: notes, fisc/markets dual regulatory mechanism
+
 At a more concrete level than Marx was able to elaborate in his life's work, the modification of the laws of motion of pure capitalism by the state needs to be incorporated.  Preobrazhensky and Lebowitz have sketched this for us.  I want to improve on them by doing the mathematical modeling of this ``dual'' regulatory mechanisms.  Rubin's history of thought, p. 26, on how during the early formation of capitalism these two forces intertwin.
 
 Also triggered by Rubin's thoughts (p. 29) on how the shifts in the industrial and trade structure (England from exporting wool to exporting cloth) led to changes in the political and ideological balance of forces between early and late mercantilism.  Think of China today.  How has its industrial and trade structure empowered and weakened different segments of society in and out of the political establishment?
