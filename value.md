@@ -1,4 +1,4 @@
-Value
+# Value
 
 The theory of value is one of the thorniest issues in the Marxian approach.  Much effort has been devoted to interpreting and developing the approach.
 
