@@ -1,0 +1,27 @@
+# DeGroot, Probability
+
+``The concepts of chance and uncertainty are as old as civilization itself. [...] Gambling has a long history.'' (p. 1)
+
+In fact, life (individual and social life) is a series of gambles, insofar as the productive force of labor is finite, and -- as a consequence -- knowledge is limited.  Every human action is a ``choice under uncertainty.''
+
+Probability should be regarded as the likelihood of an event as perceived by an individual, group, social class, or society.  This is usually called the ``subjective'' interpretation of probability.  However, insofar as collective scientific activity is involved, the individual subjective probabilities are socialized and thus become socially objective.
+
+``In order that people in general may be able to assign subjective probabilities to the outcomes, they must express the strength of their belief in numerical terms.'' (p. 4)
+
+``This subjective interpretation of probability can be formalized. In general, if people's judgments of the relative likelihoods of various combinations of outcomes satisfy certain conditions of consistency, then it can be shown that their subjective probabilities of the different possible events can be uniquely determined. However, there are two difficulties with the subjective interpretation. First, the requirement that a person’s judgments of the relative likelihoods of an infinite number of events be completely consistent and free from contradictions does not seem to be humanly attainable, unless a person is simply willing to adopt a collection of judgments known to be consistent. Second, the subjective interpretation provides no `objective' basis for two or more scientists working together to reach a common evaluation of the state of knowledge in some scientific area of common interest.'' (p. 4)
+
+That is why we have scientific debate and communication.
+
+``On the other hand, recognition of the subjective interpretation of probability has the salutary effect of emphasizing some of the subjective aspects of science. A particular scientist's evaluation of the probability of some uncertain outcome must ultimately be that person's own evaluation based on all the evidence available. This evaluation may well be based in part on the frequency interpretation of probability, since the scientist may take into account the relative frequency of occurrence of this outcome or similar outcomes in the past. It may also be based in part on the classical interpretation of probability, since the scientist may take into account the total number of possible outcomes that are considered equally likely to occur. Nevertheless, the final assignment of numerical probabilities is the responsibility of the scientist herself.'' (p. 4)
+
+
+``The subjective nature of science is also revealed in the actual problem that a particular scientist chooses to study from the class of problems that might have been chosen, in the experiments that are selected in carrying out this study, and in the conclusions drawn from the experimental data.'' (p. 4)
+
+The ``subjective'' interpretation should be re-baptized as the socially-objective interpretation of probability, as a synthetic superset of the other ones.  Ultimately, it is a social judgment that underpins probability, because it is about human action.  It is about making human actions more powerful or effective, which requires that human ends and means be more consistent with the perceived world.
+
+One of the advantages (as advocated by Slutsky) of formalization of the calculus of probabilities, what we call ``probability theory,'' is that it is ``purely formal'' and does not depend on the specific meaning of probability.
+
+The assumption of ``equal chance'' that underlies the classical interpretation is simply the recognition of utmost ignorance about the processes of nature or society.  Only an intimate knowledge of these processes allows a person to decide that an outcome or event has a greater chance than another one, as then the specificity of the outcomes or events is highlighted.
+
+Statistical inference is about determining probabilities of events or, more generally, the probability distributions of certain defined ``random variables.''  A second task is that of specifying rules to revise these probabilities as more knowledge is acquired.
+
